@@ -5,9 +5,9 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import './index.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { store } from './store';
 import HomePage from "./pages/HomePage/HomePage";
 import DetailsPage from "./pages/DetailsPage/DetailsPage";
+import store from "./features/store";
 
 const router = createBrowserRouter([
   {
