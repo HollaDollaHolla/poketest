@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link, Outlet } from "react-router-dom";
 import logo from './logo.svg';
 import './App.scss';
 
@@ -10,14 +11,14 @@ function App() {
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+
+        <nav className='link-list'>
+          <Link to="/" className='link'>Home Page</Link>
+          <Link to="/details/1" className='link'>Details Page</Link>
+        </nav>
+
+        <Outlet />
+
       </header>
     </div>
   );
