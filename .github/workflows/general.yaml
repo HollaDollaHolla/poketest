@@ -1,34 +1,57 @@
+name: Build & deploy
+
 on:
   push:
     branches:
       - master
-      - feaure/init
+  pull_request:
+    branches:
+      - master
 
-env:
-  version: 0.0.0.${{github.run_number}}
 jobs:
   build:
+    name: Build
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v2
-      - name: generate version
-        uses: mathiasvr/command-output@v1
-        id: version
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install Node.js
+        uses: actions/setup-node@v1
         with:
-          run: date "+%Y.%m.%d.%H%M%S.${{github.run_number}}" | tr -d '\n'
-      - run: npm i
-        shell: bash
-      - run: npm ci
-        shell: bash
-      - run: npm run build
-        shell: bash
-      - run: git config user.name github-actions
-        shell: bash
-      - run: git config user.email github-actions@github.com
-        shell: bash
-      - run: git --work-tree build add --all
-        shell: bash
-      - run: git commit -m "Automatic Deploy action run by github-actions version - ${{ steps.version.outputs.stdout }}"
-        shell: bash
-      - run: git push origin HEAD:gh-pages --force
-        shell: bash
+          node-version: 13.x
+
+      - name: Install NPM packages
+        run: npm ci
+
+      - name: Build project
+        run: npm run build
+
+      - name: Run tests
+        run: npm run test
+
+      - name: Upload production-ready build files
+        uses: actions/upload-artifact@v2
+        with:
+          name: production-files
+          path: ./build
+
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: production-files
+          path: ./build
+
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build
