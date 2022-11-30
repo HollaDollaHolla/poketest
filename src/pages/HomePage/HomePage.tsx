@@ -76,7 +76,7 @@ const HomePage = () => {
   const pokemons = useAppSelector(pokemonsSelector);
   const cachedPokemons = useAppSelector(cachedPokemonsSelector);
 
-  const itemsPerPage = 36;
+  const itemsPerPage = 12;
 
   const classes = useStyles();
 
