@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {pokemonsSelector, resetPokemonsReducer} from "../features/pokeSlice";
 import {searchPokemonsByNameReducer} from "../features/pokeListSlice";
-import {createStyles, Divider, IconButton, InputBase, makeStyles, Paper, Theme} from "@material-ui/core";
+import {createStyles, IconButton, InputBase, makeStyles, Paper, Theme} from "@material-ui/core";
 import SearchIcon from '@material-ui/icons/Search';
 
 const useStyles = makeStyles((theme: Theme) =>

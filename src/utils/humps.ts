@@ -53,6 +53,7 @@ export class Humps {
       return str;
     }
 
+    //eslint-disable-next-line
     str = str.replace(/[\-_\s]+(.)?/g, (match, chr) =>
       chr ? chr.toUpperCase() : ''
     );
@@ -100,6 +101,7 @@ export class Humps {
   static isNumerical(obj: any): boolean {
     obj = obj - 0;
 
+    //eslint-disable-next-line
     return obj === obj;
   }
 

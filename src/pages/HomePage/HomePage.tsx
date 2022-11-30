@@ -11,7 +11,7 @@ import {
 import Container from "@material-ui/core/Container";
 import { useAppSelector } from "../../hooks/redux";
 import InfiniteScroll from "../../components/InfiniteScroll";
-import {getPokemons, Pokemon, pokemonsSelector} from "../../features/pokeSlice";
+import {getPokemons, pokemonsSelector} from "../../features/pokeSlice";
 import {cachedPokemonsSelector} from "../../features/pokeListSlice";
 import PokeListSearchForm from "../../components/PokeListSearchForm";
 
@@ -111,8 +111,8 @@ const HomePage = () => {
                         pokemon === null || pokemon.empty ? (
                           <ImageListItem key={pokemon?.id}  className={classes.imageItem}>
                             <div className={classes.imageItemInner}>
-                              <img className={classes.imageItemImg}
-                                   src="https://oi.flyimg.io/upload/w_273/https://raw.githubusercontent.com/HybridShivam/Pokemon/master/assets/images/129.png"/>
+                              <img className={classes.imageItemImg} alt="loading"
+                                   src="https://oi.flyimg.io/upload/w_273/https://raw.githubusercontent.com/HybridShivam/Pokemon/master/assets/images/129.png" />
                               <ImageListItemBar
                                 title={pokemon?.id}
                                 subtitle={<span>loading...</span>}

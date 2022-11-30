@@ -2,8 +2,6 @@ import React, {useState, useContext, createContext, useEffect} from "react";
 import {useDispatch} from "react-redux";
 import {getPokemons} from '../features/pokeSlice';
 import {Waypoint as ReactWaypoint} from 'react-waypoint';
-import {createStyles, ImageList, makeStyles, Theme} from "@material-ui/core";
-
 
 type ContextType = {
   page: number;
