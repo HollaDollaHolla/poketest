@@ -72,40 +72,40 @@ const HomePage = () => {
                 cachedPokemons.status.state === "INITIAL"
               ) && (
                 <>
-                <InfiniteScroll.Container>
-                  <ImageList cols={6} rowHeight={250} className={classes.imageList}>
-                    {pokemons.data.map((pokemon, index) =>
-                      pokemon === null || pokemon.empty ? (
-                        <ImageListItem key={pokemon?.id} cols={1} className={classes.imageItem}>
-                          <img
-                            src="https://oi.flyimg.io/upload/w_273/https://raw.githubusercontent.com/HybridShivam/Pokemon/master/assets/images/129.png"/>
-                          <ImageListItemBar
-                            title={pokemon?.id}
-                            subtitle={<span>loading...</span>}
-                          />
-                        </ImageListItem>
-                      ) : (
-                        <ImageListItem key={pokemon.id} cols={1} className={classes.imageItem}>
-                          <img src={pokemon.img} alt={pokemon.name} loading="lazy"/>
-                          <ImageListItemBar
-                            title={pokemon.name}
-                            subtitle={<span>weight: {pokemon.weight}</span>}
-                          />
-                        </ImageListItem>
+                  <InfiniteScroll.Container>
+                    <ImageList cols={6} rowHeight={250} className={classes.imageList}>
+                      {pokemons.data.map((pokemon, index) =>
+                        pokemon === null || pokemon.empty ? (
+                          <ImageListItem key={pokemon?.id} cols={1} className={classes.imageItem}>
+                            <img
+                              src="https://oi.flyimg.io/upload/w_273/https://raw.githubusercontent.com/HybridShivam/Pokemon/master/assets/images/129.png"/>
+                            <ImageListItemBar
+                              title={pokemon?.id}
+                              subtitle={<span>loading...</span>}
+                            />
+                          </ImageListItem>
+                        ) : (
+                          <ImageListItem key={pokemon.id} cols={1} className={classes.imageItem}>
+                            <img src={pokemon.img} alt={pokemon.name} loading="lazy"/>
+                            <ImageListItemBar
+                              title={pokemon.name}
+                              subtitle={<span>weight: {pokemon.weight}</span>}
+                            />
+                          </ImageListItem>
 
-                      )
+                        )
                       )}
-                      </ImageList>
+                    </ImageList>
 
-                      </InfiniteScroll.Container>
-                      <InfiniteScroll.Waypoint/>
-                      </>
-                      )}
-                  </div>
+                  </InfiniteScroll.Container>
+                  <InfiniteScroll.Waypoint/>
                 </>
-                )}
-                </InfiniteScroll>
-                </div>
-                );
-              };
-              export default HomePage;
+              )}
+            </div>
+          </>
+        )}
+      </InfiniteScroll>
+    </div>
+  );
+};
+export default HomePage;
