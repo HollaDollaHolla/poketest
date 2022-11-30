@@ -28,7 +28,6 @@ const useStyles = makeStyles((theme: Theme) =>
 
 type Props = {
   mutatePage: React.Dispatch<React.SetStateAction<number>>;
-  placeholder?: string;
 };
 
 const PokeListSearchForm = ({

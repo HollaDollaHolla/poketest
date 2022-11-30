@@ -227,6 +227,7 @@ export const getPokemonById = wrapReduxAsyncHandler(
 
     const transformedPokemon = {
       ...Humps.camelizeKeys(pokemon),
+      img: PokeImageTransform.TransformImage(pokemonId)
     };
     dispatch(getSinglePokemonReducer({pokemon: transformedPokemon}));
   }
