@@ -68,7 +68,7 @@ export const DetailsPage = () => {
           selectedBackgroundColor && (
           // selectedEvolutionChain && (
           <div className="pb-8">
-            <Link to={'/'}>
+            <Link to={'/poketest'}>
               <IconButton>
                 <ArrowBack/>
               </IconButton>

@@ -2,7 +2,7 @@
   "name": "poketest",
   "version": "0.1.0",
   "private": false,
-  "homepage": "https://HollaDollaHolla.github.io/poketest",
+  "homepage": "https://holladollaholla.github.io/poketest/",
   "dependencies": {
     "@material-ui/core": "^4.12.4",
     "@material-ui/icons": "^4.11.3",

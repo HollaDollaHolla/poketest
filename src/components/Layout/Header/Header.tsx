@@ -33,7 +33,7 @@ export const Header = () => {
   const classes = useStyles();
 
   return <header className={classes.Header}>
-    <Link className={classes.HeaderLogo} to={'/'}>
+    <Link className={classes.HeaderLogo} to={'/poketest'}>
       <img className={classes.HeaderLogoImg} src={Logo} alt=""/>
     </Link>
   </header>
