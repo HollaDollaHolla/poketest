@@ -2,6 +2,8 @@ import React, {useState, useContext, createContext, useEffect} from "react";
 import {useDispatch} from "react-redux";
 import {getPokemons} from '../features/pokeSlice';
 import {Waypoint as ReactWaypoint} from 'react-waypoint';
+import {createStyles, ImageList, makeStyles, Theme} from "@material-ui/core";
+
 
 type ContextType = {
   page: number;
@@ -33,7 +35,7 @@ const Waypoint = () => {
   }, []);
 
   return (
-    <div>
+    <div className="mt-48">
       {!isLoading && (
         <ReactWaypoint
           onEnter={() => {
@@ -53,7 +55,7 @@ type ContainerProps = {
 };
 const Container = ({children}: ContainerProps) => {
   return (
-    <div>
+    <div >
       {children}
     </div>
   );

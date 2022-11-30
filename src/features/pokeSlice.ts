@@ -4,6 +4,7 @@ import {Humps} from "../utils/humps";
 import pokeApi from "../api/pokeAPI";
 import {PokeList} from "./types";
 import {statusHandlerReducer, wrapReduxAsyncHandler} from "./utils";
+import {PokeImageTransform} from "../utils/PokeImageTransform";
 
 export type Pokemon = {
   empty: boolean;
@@ -43,6 +44,7 @@ export type Pokemon = {
     slot: number;
     type: PokeList;
   }[];
+  img: string;
 };
 
 type SliceState = {
@@ -195,6 +197,7 @@ export const getPokemons = wrapReduxAsyncHandler(
     for (const id of missedIds) {
       promisesToWait.push(pokeApi.getPokemonByNameOrId(id).then(pokemon => {
         const camelizedPokemon = Humps.camelizeKeys(pokemon);
+        camelizedPokemon.img = PokeImageTransform.TransformImage(camelizedPokemon.id)
 
         dispatch(
           getPokemonsReducer({
