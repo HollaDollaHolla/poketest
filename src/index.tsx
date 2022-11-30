@@ -11,12 +11,12 @@ import store from "./features/store";
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "",
     element: <App />,
     errorElement: <div>Error Page</div>,
     children: [
       {
-        path: "/",
+        path: "",
         element: <HomePage />,
       },
       {
