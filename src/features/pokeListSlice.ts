@@ -75,13 +75,13 @@ const cachedPokeListSlice = createSlice({
             ...pokemon
           };
         })
-      if (sortOrder == SortOrder.None) {
+      if (sortOrder === SortOrder.None) {
 
         return;
       }
 
       state.data = state.cache.sort((a, b) =>
-        sortOrder == SortOrder.Asc
+        sortOrder === SortOrder.Asc
           ? a.name.localeCompare(b.name)
           : b.name.localeCompare(a.name)
       )
