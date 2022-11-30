@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme: Theme) =>
       backgroundColor: '#434a57',
       display: 'flex',
       alignItems: 'center',
-      height: '64px',
+      height: 'var(--header-h)',
       zIndex: 1,
       padding: '0 16px',
     },
