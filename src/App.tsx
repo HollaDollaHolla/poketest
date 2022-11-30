@@ -1,13 +1,13 @@
 import React, {useEffect} from 'react';
-import { Link, Outlet } from "react-router-dom";
-import logo from './logo.svg';
+import { Outlet } from "react-router-dom";
 import './App.scss';
-import {useDispatch, useSelector} from "react-redux";
+import { useAppDispatch, useAppSelector } from "./hooks/redux";
 import {cachedPokemonsSelector, getCachedPokemons} from "./features/pokeListSlice";
+import Header from "./components/Layout/Header/Header";
 
 function App() {
-  const dispatch = useDispatch();
-  const cachedPokemons = useSelector(cachedPokemonsSelector);
+  const dispatch = useAppDispatch();
+  const cachedPokemons = useAppSelector(cachedPokemonsSelector);
 
   useEffect(() => {
     dispatch(getCachedPokemons() as any);
@@ -16,25 +16,14 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
-        {/*<img src={logo} className="App-logo" alt="logo" />*/}
-        {/*<p>*/}
-        {/*  Edit <code>src/App.tsx</code> and save to reload.*/}
-        {/*</p>*/}
+      <Header />
 
-        {/*<nav className='link-list'>*/}
-        {/*  <Link to="/" className='link'>Home Page</Link>*/}
-        {/*  <Link to="/details/1" className='link'>Details Page</Link>*/}
-        {/*</nav>*/}
-
-        {cachedPokemons.status.state === 'LOADING' ||
-        cachedPokemons.status.state === 'INIT' ? (
-          <div>Loading...</div>
-        ) : (
-          <Outlet />
-        )}
-
-      </header>
+      {cachedPokemons.status.state === 'LOADING' ||
+      cachedPokemons.status.state === 'INIT' ? (
+        <div>Loading...</div>
+      ) : (
+        <Outlet />
+      )}
     </div>
   );
 }

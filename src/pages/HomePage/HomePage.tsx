@@ -1,33 +1,66 @@
-import {useSelector} from "react-redux";
-import InfiniteScroll from "../../components/InfiniteScroll";
-import {getPokemons, Pokemon, pokemonsSelector} from "../../features/pokeSlice";
-import {cachedPokemonsSelector} from "../../features/pokeListSlice";
-import PokeListSearchForm from "../../components/PokeListSearchForm";
+import React from "react";
+import { Link } from "react-router-dom";
 import {
   createStyles,
-  IconButton,
   ImageList,
   ImageListItem,
   ImageListItemBar,
   makeStyles,
   Theme
 } from "@material-ui/core";
-import React from "react";
-
+import Container from "@material-ui/core/Container";
+import { useAppSelector } from "../../hooks/redux";
+import InfiniteScroll from "../../components/InfiniteScroll";
+import {getPokemons, Pokemon, pokemonsSelector} from "../../features/pokeSlice";
+import {cachedPokemonsSelector} from "../../features/pokeListSlice";
+import PokeListSearchForm from "../../components/PokeListSearchForm";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {
+    HomePage: {
       display: 'flex',
-      flexWrap: 'wrap',
-      justifyContent: 'space-around',
-      overflow: 'hidden',
-      margin: '20px'
-      // backgroundColor: theme.palette.background.paper,
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: '24px 0',
+    },
+    HomePageSearch: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: '0 16px 32px',
     },
     imageList: {},
     imageItem: {
-      minWidth: 250
+      width: '100% !important',
+      // minWidth: 250,
+      // [theme.breakpoints.up('xs')]: {
+      //   width: 'calc(100% / 2) !important',
+      // },
+      [theme.breakpoints.up('sm')]: {
+        width: 'calc(100% / 2) !important',
+      },
+      [theme.breakpoints.up('md')]: {
+        width: 'calc(100% / 3) !important',
+      },
+      [theme.breakpoints.up('lg')]: {
+        width: 'calc(100% / 4) !important',
+      },
+      [theme.breakpoints.up('xl')]: {
+        width: 'calc(100% / 5) !important',
+      },
+    },
+    imageItemInner: {
+      display: 'block',
+      width: '100%',
+      height: '100%',
+      backgroundColor: 'rgba(255, 255, 255, 0.05)',
+    },
+    imageItemImg: {
+      width: '100%',
+      height: '100%',
+      objectFit: 'contain',
     },
     icon: {
       color: 'rgba(255, 255, 255, 0.54)',
@@ -36,15 +69,15 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const HomePage = () => {
-  const pokemons = useSelector(pokemonsSelector);
-  const cachedPokemons = useSelector(cachedPokemonsSelector);
+  const pokemons = useAppSelector(pokemonsSelector);
+  const cachedPokemons = useAppSelector(cachedPokemonsSelector);
 
   const itemsPerPage = 36;
 
   const classes = useStyles();
 
   return (
-    <div>
+    <div className={classes.HomePage}>
       <InfiniteScroll
         totalCount={cachedPokemons.data.length}
         itemsPerPage={itemsPerPage}
@@ -61,36 +94,40 @@ const HomePage = () => {
       >
         {({mutatePage}) => (
           <>
-            <div>
+            <div className={classes.HomePageSearch}>
               <PokeListSearchForm
                 mutatePage={mutatePage}
               />
             </div>
-            <div>
+            <Container>
               {!(
                 cachedPokemons.status.state === "LOADING" ||
                 cachedPokemons.status.state === "INITIAL"
               ) && (
                 <>
                   <InfiniteScroll.Container>
-                    <ImageList cols={6} rowHeight={250} className={classes.imageList}>
+                    <ImageList rowHeight={250} className={classes.imageList} gap={10}>
                       {pokemons.data.map((pokemon, index) =>
                         pokemon === null || pokemon.empty ? (
-                          <ImageListItem key={pokemon?.id} cols={1} className={classes.imageItem}>
-                            <img
-                              src="https://oi.flyimg.io/upload/w_273/https://raw.githubusercontent.com/HybridShivam/Pokemon/master/assets/images/129.png"/>
-                            <ImageListItemBar
-                              title={pokemon?.id}
-                              subtitle={<span>loading...</span>}
-                            />
+                          <ImageListItem key={pokemon?.id}  className={classes.imageItem}>
+                            <div className={classes.imageItemInner}>
+                              <img className={classes.imageItemImg}
+                                   src="https://oi.flyimg.io/upload/w_273/https://raw.githubusercontent.com/HybridShivam/Pokemon/master/assets/images/129.png"/>
+                              <ImageListItemBar
+                                title={pokemon?.id}
+                                subtitle={<span>loading...</span>}
+                              />
+                            </div>
                           </ImageListItem>
                         ) : (
-                          <ImageListItem key={pokemon.id} cols={1} className={classes.imageItem}>
-                            <img src={pokemon.img} alt={pokemon.name} loading="lazy"/>
-                            <ImageListItemBar
-                              title={pokemon.name}
-                              subtitle={<span>weight: {pokemon.weight}</span>}
-                            />
+                          <ImageListItem  key={pokemon.id}  className={classes.imageItem}>
+                            <Link to={`pokemon/${pokemon.id}`} className={classes.imageItemInner}>
+                              <img className={classes.imageItemImg} src={pokemon.img} alt={pokemon.name} loading="lazy"/>
+                              <ImageListItemBar
+                                title={pokemon.name}
+                                subtitle={<span>weight: {pokemon.weight}</span>}
+                              />
+                            </Link>
                           </ImageListItem>
 
                         )
@@ -101,7 +138,7 @@ const HomePage = () => {
                   <InfiniteScroll.Waypoint/>
                 </>
               )}
-            </div>
+            </Container>
           </>
         )}
       </InfiniteScroll>

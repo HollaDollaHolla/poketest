@@ -55,7 +55,7 @@ type ContainerProps = {
 };
 const Container = ({children}: ContainerProps) => {
   return (
-    <div >
+    <div className=''>
       {children}
     </div>
   );
