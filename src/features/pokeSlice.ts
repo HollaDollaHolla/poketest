@@ -159,13 +159,12 @@ export const getPokemons = wrapReduxAsyncHandler(
   statusHandler,
   async (dispatch, {page, cachedPokemonList, itemsPerPage, cachedPokemons}) => {
     const results = cachedPokemonList.slice(page, page + itemsPerPage) as Pokemon[];
-    const getIdFromUrl = (url: string): number => Number(url.split('/').slice(-2)[0]);
 
     if (!results?.length){
       return;
     }
 
-    const ids = results.map(({url}: any) => getIdFromUrl(url))
+    const ids = results.map(({id}: any) => id)
 
     dispatch(initializePokemonsReducer({ids }));
 

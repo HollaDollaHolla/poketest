@@ -1,6 +1,6 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "./store";
-import {PokeList} from "./types";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {RootState} from "./store";
+import {PokeList, SortOrder} from "./types";
 import {statusHandlerReducer, wrapReduxAsyncHandler} from "./utils";
 import {Humps} from "../utils/humps";
 import pokeApi from "../api/pokeAPI";
@@ -32,9 +32,19 @@ const cachedPokeListSlice = createSlice({
         cachedPokemons: (PokeList & { distance: number })[];
       }>
     ) {
-      const { cachedPokemons } = action.payload;
-      state.cache = cachedPokemons;
-      state.data = [...cachedPokemons];
+      const {cachedPokemons} = action.payload;
+
+      const getIdFromUrl = (url: string): number => Number(url.split('/').slice(-2)[0]);
+
+      const mappedCachedPokemons = cachedPokemons.map(p => {
+        return {
+          ...p,
+          id: getIdFromUrl(p.url)
+        }
+      })
+
+      state.cache = mappedCachedPokemons;
+      state.data = [...mappedCachedPokemons];
     },
     searchPokemonsByNameReducer(
       state,
@@ -42,9 +52,39 @@ const cachedPokeListSlice = createSlice({
         pokemonName: string;
       }>
     ) {
-      const { pokemonName } = action.payload;
+      const {pokemonName} = action.payload;
 
       state.data = state.cache.filter(p => p.name.includes(pokemonName))
+        .map((pokemon) => {
+          return {
+            ...pokemon
+          };
+        })
+    },
+    sortPokemonsByNameReducer(
+      state,
+      action: PayloadAction<{
+        sortOrder: SortOrder;
+      }>
+    ) {
+      const {sortOrder} = action.payload;
+
+      state.data = state.cache.sort((a, b) => a.id - b.id)
+        .map((pokemon) => {
+          return {
+            ...pokemon
+          };
+        })
+      if (sortOrder == SortOrder.None) {
+
+        return;
+      }
+
+      state.data = state.cache.sort((a, b) =>
+        sortOrder == SortOrder.Asc
+          ? a.name.localeCompare(b.name)
+          : b.name.localeCompare(a.name)
+      )
         .map((pokemon) => {
           return {
             ...pokemon
@@ -60,10 +100,11 @@ export const {
   error,
   success,
   getCachedPokemonsReducer,
-  searchPokemonsByNameReducer
+  searchPokemonsByNameReducer,
+  sortPokemonsByNameReducer
 } = cachedPokeListSlice.actions;
 
-const statusHandler = { initialize, error, success };
+const statusHandler = {initialize, error, success};
 
 export const cachedPokemonsSelector = (state: RootState) =>
   state.cachedPokemons;

@@ -1,6 +1,7 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import {
+  Button,
   createStyles,
   ImageList,
   ImageListItem,
@@ -9,11 +10,13 @@ import {
   Theme
 } from "@material-ui/core";
 import Container from "@material-ui/core/Container";
-import { useAppSelector } from "../../hooks/redux";
+import {useAppSelector} from "../../hooks/redux";
 import InfiniteScroll from "../../components/InfiniteScroll";
 import {getPokemons, pokemonsSelector} from "../../features/pokeSlice";
 import {cachedPokemonsSelector} from "../../features/pokeListSlice";
 import PokeListSearchForm from "../../components/PokeListSearchForm";
+import {PokeTypeColors} from "../../features/types";
+import {EnumHelper} from "../../utils/EnumUtil";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -77,6 +80,13 @@ const HomePage = () => {
 
   const classes = useStyles();
 
+  // it's an example how to use enums as dynamic types
+  const colorObject = EnumHelper.enumToObject<PokeTypeColors>(PokeTypeColors, [], true)
+
+  const getTypeBackgroundColor = (type: string): string => {
+    return colorObject[type] || '#ffffff'
+  }
+
   return (
     <div className={classes.HomePage}>
       <InfiniteScroll
@@ -110,10 +120,10 @@ const HomePage = () => {
                     <ImageList rowHeight={250} className={classes.imageList} gap={10}>
                       {pokemons.data.map((pokemon, index) =>
                         pokemon === null || pokemon.empty ? (
-                          <ImageListItem key={pokemon?.id}  className={classes.imageItem}>
+                          <ImageListItem key={pokemon?.id} className={classes.imageItem}>
                             <div className={classes.imageItemInner}>
                               <img className={classes.imageItemImg} alt="loading"
-                                   src="https://oi.flyimg.io/upload/w_273/https://assets.pokemon.com/assets/cms2/img/pokedex/detail/129.png" />
+                                   src="https://oi.flyimg.io/upload/w_273/https://assets.pokemon.com/assets/cms2/img/pokedex/detail/129.png"/>
                               <ImageListItemBar
                                 title={pokemon?.id}
                                 subtitle={<span>loading...</span>}
@@ -121,12 +131,25 @@ const HomePage = () => {
                             </div>
                           </ImageListItem>
                         ) : (
-                          <ImageListItem  key={pokemon.id}  className={classes.imageItem}>
+                          <ImageListItem key={pokemon.id} className={classes.imageItem}>
                             <Link to={`pokemon/${pokemon.id}`} className={classes.imageItemInner}>
-                              <img className={classes.imageItemImg} src={pokemon.img} alt={pokemon.name} loading="lazy"/>
+                              <img className={classes.imageItemImg} src={pokemon.img} alt={pokemon.name}
+                                   loading="lazy"/>
                               <ImageListItemBar
                                 title={pokemon.name}
-                                subtitle={<span>weight: {pokemon.weight}</span>}
+                                subtitle={
+                                  <div>
+                                    <div>#{pokemon.id}</div>
+                                    {
+                                      pokemon.types.map(type =>
+                                        <Button variant="outlined"
+                                                style={{color: getTypeBackgroundColor(type.type.name)}}>
+                                          {type.type.name}
+                                        </Button>
+                                      )
+                                    }
+                                  </div>
+                                }
                               />
                             </Link>
                           </ImageListItem>
