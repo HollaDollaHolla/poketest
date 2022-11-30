@@ -2,6 +2,27 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {pokemonsSelector, resetPokemonsReducer} from "../features/pokeSlice";
 import {searchPokemonsByNameReducer} from "../features/pokeListSlice";
+import {createStyles, Divider, IconButton, InputBase, makeStyles, Paper, Theme} from "@material-ui/core";
+import SearchIcon from '@material-ui/icons/Search';
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      margin: '15px',
+      display: 'flex',
+      alignItems: 'center',
+      width: 300,
+      height: 30,
+    },
+    input: {
+      marginLeft: theme.spacing(1),
+      flex: 1,
+    },
+    iconButton: {
+      padding: 10,
+    }
+  }),
+);
 
 type Props = {
   mutatePage: React.Dispatch<React.SetStateAction<number>>;
@@ -17,6 +38,8 @@ const PokeListSearchForm = ({
 
   const isLoading = pokemons.status.state === 'LOADING';
 
+  const classes = useStyles();
+
   const submitFormHandler = () => {
     if (!isLoading) {
       dispatch(resetPokemonsReducer({}));
@@ -26,29 +49,24 @@ const PokeListSearchForm = ({
   };
 
   return (
-    <div >
-      <div >
-
-        <input
-          placeholder={"Search an item..."}
-          value={value}
-          onKeyPress={(e: React.KeyboardEvent) => {
-            if (e.key === "Enter") {
-              submitFormHandler();
-            }
-          }}
-          onChange={(e: React.FormEvent<HTMLInputElement>) =>
-            setValue(e.currentTarget.value)
+    <Paper className={classes.root}>
+      <InputBase
+        className={classes.input}
+        value={value}
+        placeholder="Search by name..."
+        onKeyPress={(e: React.KeyboardEvent) => {
+          if (e.key === "Enter") {
+            submitFormHandler();
           }
-        />
-      </div>
-
-      <button
-        onClick={submitFormHandler}
-      >
-        Search
-      </button>
-    </div>
+        }}
+        onChange={(e) =>
+          setValue(e.currentTarget.value)
+        }
+      />
+      <IconButton type="button" className={classes.iconButton} aria-label="search"  onClick={submitFormHandler}>
+        <SearchIcon />
+      </IconButton>
+    </Paper>
   );
 };
 

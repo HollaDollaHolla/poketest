@@ -25,7 +25,9 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: '20px'
       // backgroundColor: theme.palette.background.paper,
     },
-    imageList: {
+    imageList: {},
+    imageItem: {
+      minWidth: 250
     },
     icon: {
       color: 'rgba(255, 255, 255, 0.54)',
@@ -37,15 +39,15 @@ const HomePage = () => {
   const pokemons = useSelector(pokemonsSelector);
   const cachedPokemons = useSelector(cachedPokemonsSelector);
 
-  const itemsPerPage = 18;
+  const itemsPerPage = 36;
 
   const classes = useStyles();
 
   return (
-   <div>
+    <div>
       <InfiniteScroll
         totalCount={cachedPokemons.data.length}
-        itemsPerPage = {itemsPerPage}
+        itemsPerPage={itemsPerPage}
         paginationHandler={(page: number) =>
           getPokemons({
             itemsPerPage,
@@ -57,52 +59,53 @@ const HomePage = () => {
         }
         isLoading={pokemons.status.state === "LOADING"}
       >
-        {({ mutatePage }) => (
+        {({mutatePage}) => (
           <>
-            <div >
+            <div>
               <PokeListSearchForm
                 mutatePage={mutatePage}
               />
             </div>
-            <div >
+            <div>
               {!(
                 cachedPokemons.status.state === "LOADING" ||
                 cachedPokemons.status.state === "INITIAL"
               ) && (
                 <>
-                  <InfiniteScroll.Container>
-                    <ImageList  cols={6} rowHeight={250} className={classes.imageList}>
-                      {pokemons.data.map((pokemon, index) =>
-                        pokemon === null || pokemon.empty ? (
-                          <div>
-                            notLoaded {pokemon?.id}
-                          </div>
-                        ) : (
-                          // <div>
-                          //   loaded: {pokemon.id}. name: {pokemon.name}
-                          // </div>
+                <InfiniteScroll.Container>
+                  <ImageList cols={6} rowHeight={250} className={classes.imageList}>
+                    {pokemons.data.map((pokemon, index) =>
+                      pokemon === null || pokemon.empty ? (
+                        <ImageListItem key={pokemon?.id} cols={1} className={classes.imageItem}>
+                          <img
+                            src="https://oi.flyimg.io/upload/w_273/https://raw.githubusercontent.com/HybridShivam/Pokemon/master/assets/images/129.png"/>
+                          <ImageListItemBar
+                            title={pokemon?.id}
+                            subtitle={<span>loading...</span>}
+                          />
+                        </ImageListItem>
+                      ) : (
+                        <ImageListItem key={pokemon.id} cols={1} className={classes.imageItem}>
+                          <img src={pokemon.img} alt={pokemon.name} loading="lazy"/>
+                          <ImageListItemBar
+                            title={pokemon.name}
+                            subtitle={<span>weight: {pokemon.weight}</span>}
+                          />
+                        </ImageListItem>
 
-                          <ImageListItem key={pokemon.id}  cols={1}>
-                            <img src={pokemon.img} alt={pokemon.name} loading="lazy"/>
-                            <ImageListItemBar
-                              title={pokemon.name}
-                              subtitle={<span>by: {pokemon.weight}</span>}
-                            />
-                          </ImageListItem>
-
-                        )
+                      )
                       )}
-                    </ImageList>
+                      </ImageList>
 
-                  </InfiniteScroll.Container>
-                  <InfiniteScroll.Waypoint />
+                      </InfiniteScroll.Container>
+                      <InfiniteScroll.Waypoint/>
+                      </>
+                      )}
+                  </div>
                 </>
-              )}
-            </div>
-          </>
-        )}
-      </InfiniteScroll>
-   </div>
-  );
-};
-export default HomePage;
+                )}
+                </InfiniteScroll>
+                </div>
+                );
+              };
+              export default HomePage;
