@@ -113,7 +113,7 @@ const HomePage = () => {
                           <ImageListItem key={pokemon?.id}  className={classes.imageItem}>
                             <div className={classes.imageItemInner}>
                               <img className={classes.imageItemImg} alt="loading"
-                                   src="https://oi.flyimg.io/upload/w_273/https://raw.githubusercontent.com/HybridShivam/Pokemon/master/assets/images/129.png" />
+                                   src="https://oi.flyimg.io/upload/w_273/https://assets.pokemon.com/assets/cms2/img/pokedex/detail/129.png" />
                               <ImageListItemBar
                                 title={pokemon?.id}
                                 subtitle={<span>loading...</span>}

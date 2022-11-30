@@ -1,6 +1,6 @@
 import Axios from "axios";
 
-const axios = Axios.create({
+const api = Axios.create({
   baseURL: "https://pokeapi.co/api/v2",
 });
 
@@ -8,7 +8,7 @@ export const createApiRequest = async (
   url: string
 ) => {
   try {
-    const response = await axios({
+    const response = await api({
       url,
       method: 'GET',
       headers: {
@@ -23,4 +23,4 @@ export const createApiRequest = async (
   }
 };
 
-export default axios;
+export default api;

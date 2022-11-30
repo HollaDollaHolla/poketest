@@ -1,4 +1,4 @@
-import { createApiRequest } from "./axios";
+import { createApiRequest } from "./api";
 
 class ApiCallCreator {
   private readonly entityType = "/pokemon"

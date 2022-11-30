@@ -1,7 +1,7 @@
 
 export class PokeImageTransform {
   public static TransformImage(pokeId: number){
-    return `https://oi.flyimg.io/upload/w_273/https://raw.githubusercontent.com/HybridShivam/Pokemon/master/assets/images/${PokeImageTransform.LeftPad(pokeId, 3)}.png`
+    return `https://oi.flyimg.io/upload/w_273/https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${PokeImageTransform.LeftPad(pokeId, 3)}.png`
     // return `https://raw.githubusercontent.com/HybridShivam/Pokemon/master/assets/images/${PokeImageTransform.LeftPad(pokeId, 3)}.png`
   }
 
