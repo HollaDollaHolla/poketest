@@ -11,7 +11,7 @@ import store from "./features/store";
 
 const router = createBrowserRouter([
   {
-    path: "",
+    path: "/poketest",
     element: <App />,
     errorElement: <div>Error Page</div>,
     children: [
@@ -20,7 +20,7 @@ const router = createBrowserRouter([
         element: <HomePage />,
       },
       {
-        path: "/pokemon/:id",
+        path: "pokemon/:id",
         element: <DetailsPage />,
       },
     ],
