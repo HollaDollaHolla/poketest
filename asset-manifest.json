@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/poketest/static/css/main.8b283e7d.css",
-    "main.js": "/poketest/static/js/main.af11c9af.js",
+    "main.css": "/poketest/static/css/main.d20bd7a9.css",
+    "main.js": "/poketest/static/js/main.cc39ed44.js",
     "static/js/787.f3bcd0a4.chunk.js": "/poketest/static/js/787.f3bcd0a4.chunk.js",
     "static/media/pokemon_logo.webp": "/poketest/static/media/pokemon_logo.6df069fa965a6b526c77.webp",
     "index.html": "/poketest/index.html",
-    "main.8b283e7d.css.map": "/poketest/static/css/main.8b283e7d.css.map",
-    "main.af11c9af.js.map": "/poketest/static/js/main.af11c9af.js.map",
+    "main.d20bd7a9.css.map": "/poketest/static/css/main.d20bd7a9.css.map",
+    "main.cc39ed44.js.map": "/poketest/static/js/main.cc39ed44.js.map",
     "787.f3bcd0a4.chunk.js.map": "/poketest/static/js/787.f3bcd0a4.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.8b283e7d.css",
-    "static/js/main.af11c9af.js"
+    "static/css/main.d20bd7a9.css",
+    "static/js/main.cc39ed44.js"
   ]
 }
