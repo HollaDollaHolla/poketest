@@ -1,20 +1,14 @@
 import { Link } from "react-router-dom";
-import { createStyles, makeStyles, Theme } from "@material-ui/core";
+import {AppBar, createStyles, makeStyles, Slide, Theme, Toolbar, useScrollTrigger} from "@material-ui/core";
 import Logo from '../../../assets/images/pokemon_logo.webp';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    Header: {
-      position: 'sticky',
-      top: 0,
-      left: 0,
-      right: 0,
-      backgroundColor: '#434a57',
-      display: 'flex',
-      alignItems: 'center',
-      height: 'var(--header-h)',
-      zIndex: 1,
-      padding: '0 16px',
+    colorPrimary: {
+      backgroundColor: theme.palette.primary.main,
+    },
+    regular: {
+      minHeight: 'var(--header-h)',
     },
     HeaderLogo: {
       display: 'block',
@@ -29,14 +23,20 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export const Header = () => {
+export const Header = (props: any) => {
+  const { window } = props;
+  const trigger = useScrollTrigger({ target: window ? window() : undefined });
   const classes = useStyles();
 
-  return <header className={classes.Header}>
-    <Link className={classes.HeaderLogo} to={'/poketest'}>
-      <img className={classes.HeaderLogoImg} src={Logo} alt=""/>
-    </Link>
-  </header>
+  return <Slide appear={false} direction="down" in={!trigger}>
+    <AppBar className={classes.colorPrimary}>
+      <Toolbar className={classes.regular}>
+        <Link className={classes.HeaderLogo} to={'/poketest'}>
+          <img className={classes.HeaderLogoImg} src={Logo} alt=""/>
+        </Link>
+      </Toolbar>
+    </AppBar>
+  </Slide>
 }
 
 export default Header;

@@ -1,9 +1,10 @@
-import {CircularProgress, createStyles, IconButton, makeStyles, Theme} from "@material-ui/core";
 import {useEffect} from "react";
-import {getPokemonById, pokemonsSelector} from "../../features/pokeSlice";
-import {PokeTypeColors} from "../../features/types";
+import {CircularProgress, createStyles, IconButton, makeStyles, Theme} from "@material-ui/core";
 import {Link, useParams} from "react-router-dom";
 import {ArrowBack} from "@material-ui/icons";
+import Container from "@material-ui/core/Container";
+import {getPokemonById, pokemonsSelector} from "../../features/pokeSlice";
+import {PokeTypeColors} from "../../features/types";
 import {useAppDispatch, useAppSelector} from "../../hooks/redux";
 import PokeAbilities from "../../components/PokemonDetails/PokeAbilities";
 import PokeMoves from "../../components/PokemonDetails/PokeMoves";
@@ -12,12 +13,8 @@ import PokeStats from "../../components/PokemonDetails/PokeStats";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     DetailsPage: {
-      // display: 'flex',
-      // flexDirection: 'column',
-      // alignItems: 'center',
-      // justifyContent: 'center',
       padding: '24px 0',
-      minHeight: 'calc(100vh - var(--header-h))',
+      minHeight: '100vh',
     },
   }),
 );
@@ -56,38 +53,35 @@ export const DetailsPage = () => {
     pokemons.status.state === 'INIT';
 
   return <div className={classes.DetailsPage}>
-    {isPageLoading ? (
-      <div>
-        <CircularProgress color="secondary"/>
-      </div>
-    ) : (
-      <>
+    <Container>
+      {isPageLoading ? (
+        <div>
+          <CircularProgress color="secondary"/>
+        </div>
+      ) : (
         <>
-          {pokemon &&
-          // selectedSpecies &&
-          selectedBackgroundColor && (
-          // selectedEvolutionChain && (
-          <div className="pb-8">
-            <Link to={'/poketest'}>
-              <IconButton>
-                <ArrowBack/>
-              </IconButton>
-            </Link>
-            <div>
-              <img src={pokemon.img} alt={pokemon.name} />
-              <div>
-                <span>#{pokemon.id}</span><span>{pokemon.name}</span>
-              </div>
+          {pokemon && selectedBackgroundColor ? (
+              <div className="pb-8">
+                <Link to={'/poketest'}>
+                  <IconButton>
+                    <ArrowBack/>
+                  </IconButton>
+                </Link>
+                <div>
+                  <img src={pokemon.img} alt={pokemon.name} />
+                  <div>
+                    <span>#{pokemon.id}</span><span>{pokemon.name}</span>
+                  </div>
 
-              <PokeAbilities pokemon={pokemon}/>
-              <PokeMoves pokemon={pokemon}/>
-              <PokeStats pokemon={pokemon}/>
-            </div>
-          </div>
-          )}
+                  <PokeAbilities pokemon={pokemon}/>
+                  <PokeMoves pokemon={pokemon}/>
+                  <PokeStats pokemon={pokemon}/>
+                </div>
+              </div>
+            ) : null}
         </>
-      </>
-    )}
+      )}
+    </Container>
   </div>
 }
 
