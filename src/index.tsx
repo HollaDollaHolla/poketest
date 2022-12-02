@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux'
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { createTheme, ThemeProvider } from "@material-ui/core";
+import { createTheme, responsiveFontSizes, ThemeProvider } from "@material-ui/core";
 import './index.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
@@ -23,6 +23,8 @@ let theme = createTheme({
     // },
   },
 });
+
+theme = responsiveFontSizes(theme);
 
 const router = createBrowserRouter([
   {

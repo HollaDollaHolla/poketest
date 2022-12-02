@@ -2,42 +2,12 @@ import InfiniteScroll from "../InfiniteScroll";
 import {getPokemons, pokemonsSelector} from "../../features/pokeSlice";
 import PokeListSearchForm from "../PokeListSearchForm";
 import Container from "@material-ui/core/Container";
-import {Button, createStyles, ImageList, ImageListItem, ImageListItemBar, makeStyles, Theme, Chip} from "@material-ui/core";
+import { createStyles, ImageList, ImageListItem, ImageListItemBar, makeStyles, Theme } from "@material-ui/core";
 import {Link} from "react-router-dom";
 import React from "react";
 import {useAppSelector} from "../../hooks/redux";
 import {cachedPokemonsSelector} from "../../features/pokeListSlice";
-import {EnumHelper} from "../../utils/EnumUtil";
-import {PokeTypeColors} from "../../features/types";
-
-// it's an example how to use enums as dynamic types
-const colorObject = EnumHelper.enumToObject<PokeTypeColors>(PokeTypeColors, [], true)
-
-const getTypeBackgroundColor = (type: string): string => {
-  return colorObject[type] || '#ffffff'
-}
-
-const usePokemonChipStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    labelSmall: (color: { bgColor?: string }) => ({
-      paddingLeft: '8px',
-      paddingRight: '8px',
-      backgroundColor: getTypeBackgroundColor(color?.bgColor || theme.palette.primary.main),
-      margin: '0 4px',
-    })
-  }),
-);
-
-export const PokemonChip = ({ name }: { name: string }) => {
-  const props = { bgColor: name };
-  const classes = usePokemonChipStyles(props);
-
-  return <Chip color={'primary'}
-               size={'small'}
-               label={name}
-               className={classes.labelSmall} />
-}
-
+import PokemonChip from "./PokemonChip";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -49,6 +19,9 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: '0 16px 32px',
     },
     imageList: {},
+    root: {
+      overflowY: 'visible'
+    },
     imageItem: {
       maxWidth: 'calc(100% / 5)',
 
@@ -124,12 +97,13 @@ export const PokemonList = () => {
           ) && (
             <>
               <InfiniteScroll.Container>
-                <ImageList cols={1} rowHeight={250} className={classes.imageList} gap={10}>
+                <ImageList cols={1} rowHeight={250} className={classes.root} gap={10}>
                   {pokemons.data.map((pokemon, index) =>
                     pokemon === null || pokemon.empty ? (
-                      <ImageListItem cols={1} key={pokemon?.id} className={classes.imageItem}>
+                      <ImageListItem cols={1} key={index} className={classes.imageItem}>
                         <div className={classes.imageItemInner}>
-                          <img className={classes.imageItemImg} alt="loading"
+                          <img className={classes.imageItemImg}
+                               alt="loading"
                                src="https://oi.flyimg.io/upload/w_273/https://assets.pokemon.com/assets/cms2/img/pokedex/detail/129.png"/>
                           <ImageListItemBar
                             title={pokemon?.id}
@@ -138,7 +112,7 @@ export const PokemonList = () => {
                         </div>
                       </ImageListItem>
                     ) : (
-                      <ImageListItem cols={1} key={pokemon.id} className={classes.imageItem}>
+                      <ImageListItem cols={1} key={pokemon.name} className={classes.imageItem}>
                         <Link to={`pokemon/${pokemon.id}`} className={classes.imageItemInner}>
                           <img className={classes.imageItemImg} src={pokemon.img} alt={pokemon.name}
                                loading="lazy"/>
@@ -152,12 +126,11 @@ export const PokemonList = () => {
                           />
                         </Link>
                       </ImageListItem>
-
                     )
                   )}
                 </ImageList>
-
               </InfiniteScroll.Container>
+
               <InfiniteScroll.Waypoint/>
             </>
           )}

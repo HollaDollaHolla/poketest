@@ -1,14 +1,17 @@
-import {useEffect} from "react";
-import {CircularProgress, createStyles, IconButton, makeStyles, Theme} from "@material-ui/core";
-import {Link, useParams} from "react-router-dom";
-import {ArrowBack} from "@material-ui/icons";
+import React, {useEffect} from "react";
+import {
+  Box,
+  CircularProgress,
+  createStyles,
+  makeStyles,
+  Theme,
+} from "@material-ui/core";
+import { useParams } from "react-router-dom";
 import Container from "@material-ui/core/Container";
 import {getPokemonById, pokemonsSelector} from "../../features/pokeSlice";
 import {PokeTypeColors} from "../../features/types";
 import {useAppDispatch, useAppSelector} from "../../hooks/redux";
-import PokeAbilities from "../../components/PokemonDetails/PokeAbilities";
-import PokeMoves from "../../components/PokemonDetails/PokeMoves";
-import PokeStats from "../../components/PokemonDetails/PokeStats";
+import PokemonDetailsCard from "../../components/PokemonDetails/PokemonDetailsCard";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -34,9 +37,7 @@ export const DetailsPage = () => {
     if (!pokemon && pokemons.status.state !== 'LOADING') {
       dispatch(getPokemonById({pokemonId: id}) as any);
     }
-    //eslint-disable-next-line
   }, [id, pokemon]);
-
 
   const backgroundColors = pokemon?.types.map(({type}) => {
     const [[, backgroundColor]] = Object.entries(PokeTypeColors).filter(
@@ -54,33 +55,10 @@ export const DetailsPage = () => {
 
   return <div className={classes.DetailsPage}>
     <Container>
-      {isPageLoading ? (
-        <div>
-          <CircularProgress color="secondary"/>
-        </div>
-      ) : (
-        <>
-          {pokemon && selectedBackgroundColor ? (
-              <div className="pb-8">
-                <Link to={'/poketest'}>
-                  <IconButton>
-                    <ArrowBack/>
-                  </IconButton>
-                </Link>
-                <div>
-                  <img src={pokemon.img} alt={pokemon.name} />
-                  <div>
-                    <span>#{pokemon.id}</span><span>{pokemon.name}</span>
-                  </div>
-
-                  <PokeAbilities pokemon={pokemon}/>
-                  <PokeMoves pokemon={pokemon}/>
-                  <PokeStats pokemon={pokemon}/>
-                </div>
-              </div>
-            ) : null}
-        </>
-      )}
+      {isPageLoading ? ( <Box><CircularProgress color="secondary"/></Box>
+      ) : <>
+        {pokemon && selectedBackgroundColor ? <PokemonDetailsCard pokemon={pokemon}/> : null}
+      </>}
     </Container>
   </div>
 }
