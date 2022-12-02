@@ -1,6 +1,6 @@
 import InfiniteScroll from "../InfiniteScroll";
 import {getPokemons, pokemonsSelector} from "../../features/pokeSlice";
-import PokeListSearchForm from "../PokeListSearchForm";
+import PokeListSearchForm from "./PokeListSearchForm";
 import Container from "@material-ui/core/Container";
 import { createStyles, ImageList, ImageListItem, ImageListItemBar, makeStyles, Theme } from "@material-ui/core";
 import {Link} from "react-router-dom";
@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme: Theme) =>
       flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
-      padding: '0 16px 32px',
+      marginBottom: 40,
     },
     imageList: {},
     root: {
@@ -85,11 +85,11 @@ export const PokemonList = () => {
   >
     {({mutatePage}) => (
       <>
-        <div className={classes.PokemonListSearch}>
+        <Container className={classes.PokemonListSearch}>
           <PokeListSearchForm
             mutatePage={mutatePage}
           />
-        </div>
+        </Container>
         <Container>
           {!(
             cachedPokemons.status.state === "LOADING" ||

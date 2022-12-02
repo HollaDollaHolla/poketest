@@ -1,20 +1,23 @@
 import React, {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {pokemonsSelector, resetPokemonsReducer} from "../features/pokeSlice";
-import {searchPokemonsByNameReducer, sortPokemonsByNameReducer} from "../features/pokeListSlice";
+import {pokemonsSelector, resetPokemonsReducer} from "../../features/pokeSlice";
+import {searchPokemonsByNameReducer, sortPokemonsByNameReducer} from "../../features/pokeListSlice";
 import {createStyles, IconButton, InputBase, makeStyles, Paper, Theme} from "@material-ui/core";
 import SearchIcon from '@material-ui/icons/Search';
-import {SortOrder} from "../features/types";
+import {SortOrder} from "../../features/types";
 import {ArrowDownward, ArrowUpward, Height} from "@material-ui/icons";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      margin: '15px',
+      padding: '6px 8px',
       display: 'flex',
       alignItems: 'center',
-      width: 300,
-      height: 30,
+      width: '100%',
+
+      [theme.breakpoints.up('md')]: {
+        maxWidth: '520px',
+      },
     },
     input: {
       marginLeft: theme.spacing(1),
@@ -97,6 +100,7 @@ const PokeListSearchForm = ({
       </IconButton>
       <InputBase
         className={classes.input}
+
         value={value}
         placeholder="Search by name..."
         onKeyPress={(e: React.KeyboardEvent) => {

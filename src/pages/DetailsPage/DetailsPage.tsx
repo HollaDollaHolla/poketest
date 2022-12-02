@@ -16,7 +16,7 @@ import PokemonDetailsCard from "../../components/PokemonDetails/PokemonDetailsCa
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     DetailsPage: {
-      padding: '24px 0',
+      padding: '32px 0 0',
       minHeight: '100vh',
     },
   }),

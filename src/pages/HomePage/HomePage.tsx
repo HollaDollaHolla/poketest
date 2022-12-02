@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme: Theme) =>
       flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
-      padding: '24px 0',
+      padding: '24px 0 0',
       minHeight: '100vh',
     },
   }),
