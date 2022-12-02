@@ -2,9 +2,7 @@ import {
   Accordion, AccordionDetails,
   AccordionSummary, Chip,
   createStyles,
-  Grid,
   makeStyles,
-  Paper,
   Theme, Typography
 } from "@material-ui/core";
 import React from "react";

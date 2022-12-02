@@ -1,4 +1,4 @@
-import {Box, createStyles, Grid, ImageListItem, makeStyles, Paper, Theme, Typography} from "@material-ui/core";
+import {Box, createStyles, Grid, makeStyles, Paper, Theme, Typography} from "@material-ui/core";
 import {Link} from "react-router-dom";
 import {ArrowBack} from "@material-ui/icons";
 import PokeAbilities from "./PokeAbilities";

@@ -37,7 +37,7 @@ export const DetailsPage = () => {
     if (!pokemon && pokemons.status.state !== 'LOADING') {
       dispatch(getPokemonById({pokemonId: id}) as any);
     }
-  }, [id, pokemon]);
+  }, [id, pokemon, dispatch]);
 
   const backgroundColors = pokemon?.types.map(({type}) => {
     const [[, backgroundColor]] = Object.entries(PokeTypeColors).filter(
