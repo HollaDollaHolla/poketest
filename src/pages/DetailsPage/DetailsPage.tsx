@@ -1,23 +1,23 @@
-import {CircularProgress, createStyles, IconButton, makeStyles, Theme} from "@material-ui/core";
-import {useEffect} from "react";
+import React, {useEffect} from "react";
+import {
+  Box,
+  CircularProgress,
+  createStyles,
+  makeStyles,
+  Theme,
+} from "@material-ui/core";
+import { useParams } from "react-router-dom";
+import Container from "@material-ui/core/Container";
 import {getPokemonById, pokemonsSelector} from "../../features/pokeSlice";
 import {PokeTypeColors} from "../../features/types";
-import {Link, useParams} from "react-router-dom";
-import {ArrowBack} from "@material-ui/icons";
 import {useAppDispatch, useAppSelector} from "../../hooks/redux";
-import PokeAbilities from "../../components/PokemonDetails/PokeAbilities";
-import PokeMoves from "../../components/PokemonDetails/PokeMoves";
-import PokeStats from "../../components/PokemonDetails/PokeStats";
+import PokemonDetailsCard from "../../components/PokemonDetails/PokemonDetailsCard";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     DetailsPage: {
-      // display: 'flex',
-      // flexDirection: 'column',
-      // alignItems: 'center',
-      // justifyContent: 'center',
       padding: '24px 0',
-      minHeight: 'calc(100vh - var(--header-h))',
+      minHeight: '100vh',
     },
   }),
 );
@@ -37,9 +37,7 @@ export const DetailsPage = () => {
     if (!pokemon && pokemons.status.state !== 'LOADING') {
       dispatch(getPokemonById({pokemonId: id}) as any);
     }
-    //eslint-disable-next-line
-  }, [id, pokemon]);
-
+  }, [id, pokemon, dispatch, pokemons.status.state]);
 
   const backgroundColors = pokemon?.types.map(({type}) => {
     const [[, backgroundColor]] = Object.entries(PokeTypeColors).filter(
@@ -56,38 +54,12 @@ export const DetailsPage = () => {
     pokemons.status.state === 'INIT';
 
   return <div className={classes.DetailsPage}>
-    {isPageLoading ? (
-      <div>
-        <CircularProgress color="secondary"/>
-      </div>
-    ) : (
-      <>
-        <>
-          {pokemon &&
-          // selectedSpecies &&
-          selectedBackgroundColor && (
-          // selectedEvolutionChain && (
-          <div className="pb-8">
-            <Link to={'/poketest'}>
-              <IconButton>
-                <ArrowBack/>
-              </IconButton>
-            </Link>
-            <div>
-              <img src={pokemon.img} alt={pokemon.name} />
-              <div>
-                <span>#{pokemon.id}</span><span>{pokemon.name}</span>
-              </div>
-
-              <PokeAbilities pokemon={pokemon}/>
-              <PokeMoves pokemon={pokemon}/>
-              <PokeStats pokemon={pokemon}/>
-            </div>
-          </div>
-          )}
-        </>
-      </>
-    )}
+    <Container>
+      {isPageLoading ? ( <Box><CircularProgress color="secondary"/></Box>
+      ) : <>
+        {pokemon && selectedBackgroundColor ? <PokemonDetailsCard pokemon={pokemon}/> : null}
+      </>}
+    </Container>
   </div>
 }
 
